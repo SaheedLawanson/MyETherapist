@@ -1,9 +1,15 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
     <div class="container-fluid mx-5">
         <!-- Logo -->
-        <a class="navbar-brand text-white" style="font-weight:500" asp-area="Admin" asp-controller="Sessions" asp-action="Index">
+        <a class="navbar-brand text-white me-5" style="font-weight:500" asp-area="Admin" asp-controller="Sessions" asp-action="Index">
             ETherapist
         </a>
+        <a class="nav-link dropdown-toggle" style="font-size:12px" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            CMT
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a></li>
+        </ul>
         <!-- Sign Up or Log in -->
         <div class="d-flex" style="font-size:12px;margin-left:auto">
             <partial name="_LoginPartial" />

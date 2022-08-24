@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using etherapist.Models;
 
 namespace etherapist.Controllers;
-[Area("Home")]
 
-public class CareersController : Controller
+public class AboutUsController : Controller
 {
     public IActionResult Index()
     {

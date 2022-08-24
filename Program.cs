@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using etherapist.Models;
 using BulkyBook.Utility;
 using Stripe;
+using etherapist.Data.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
     ).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
+// builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.ConfigureApplicationCookie(options => {
@@ -49,13 +50,29 @@ app.UseRouting();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey")
     .Get<String>();
+// seedDatabase();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{area:exists}/{controller=Sessions}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
-    pattern: "{area=Identity}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+    
 app.MapRazorPages();
 app.Run();
+
+
+// void seedDatabase() {
+//     using (var scope = app.Services.CreateScope()) {
+//         var dbInit = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+//         dbInit.Initialize();
+//     }
+// }
