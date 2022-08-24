@@ -1,0 +1,111 @@
+@using etherapist.Utility
+@using etherapist.Models.ViewModels
+@model CameronVM
+
+<div class="col bg-grey py-5 mt-5 row d-flex align-items-baseline"; style="margin-left:25%">
+    <div class="ms-5 px-5 py-5 bg-secondary col-9" style="min-width:60%;border-radius:15px;">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <div style="font-weight:600;font-size:30px;">Cameron Diagnostic Options</div>
+                <div style="font-size:12px">Choose the option that's most suitable for you</div>
+            </div>
+          </div>
+        <hr />
+        <!-- Body -->
+        <div class="pt-3">
+            <div class="c-listbar2 mb-5">
+                <div class="c-listbar2-left">
+                    <div class="c-listbar2-index">1</div>
+                    <div class="c-listbar2-topic">Intensive and Stretched</div>
+                    <div class="c-listbar2-duration">10 - 15 mins</div>
+                </div>
+                <div class="c-listbar2-right">
+                    <a class="c-listbar2-submit" asp-area="Patient" asp-controller="Cameron" 
+                        asp-action="Create" asp-route-testId="1">
+                        <i class="bi bi-play"></i>&nbsp;Start
+                    </a>
+                    <div class="c-listbar2-utility">
+                        <a href="#" data-role="popover" 
+                            data-popover-text="This test includes 50 questions and takes about 10 - 15 minutes to complete. It includes relatively deep questions and seeks to thoroughly diagnose mental issues by taking more data to ensure optimum accuracy" 
+                            data-hide-on-leave="true" data-popover-hide="0">
+                            <h7><i class="bi bi-question-circle" style="color:#FFFFFF"></i></h7>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="c-listbar2 mb-5">
+                <div class="c-listbar2-left">
+                    <div class="c-listbar2-index">2</div>
+                    <div class="c-listbar2-topic">Quick Estimate</div>
+                    <div class="c-listbar2-duration">3 - 5 mins</div>
+                </div>
+                <div class="c-listbar2-right">
+                    <a class="c-listbar2-submit" asp-area="Patient" asp-controller="Cameron" 
+                        asp-action="Create" asp-route-testId="2">
+                        <i class="bi bi-play"></i>&nbsp;Start
+                    </a>
+                    <div class="c-listbar2-utility">
+                        <a href="#" data-role="popover" 
+                            data-popover-text="This test includes 10 questions and takes approximately 3 - 5 minutes to complete, the questions are included are simple, the goal is to get a quick diagnosis. Results are failry accurate (although it is highly recommended to take the “intensive and stretched” test)." 
+                            data-hide-on-leave="true" data-popover-hide="0">
+                            <h7><i class="bi bi-question-circle" style="color:#FFFFFF"></i></h7>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="c-listbar2">
+                <div class="c-listbar2-left">
+                    <div class="c-listbar2-index">3</div>
+                    <div class="c-listbar2-topic">Biased Test</div>
+                    <div class="c-listbar2-duration">10 - 15 mins</div>
+                </div>
+                <div class="c-listbar2-right">
+                    <a class="c-listbar2-submit" asp-area="Patient" asp-controller="Cameron" 
+                        asp-action="Create" asp-route-testId="3">
+                        <i class="bi bi-play"></i>&nbsp;Start
+                    </a>
+                    <div class="c-listbar2-utility">
+                        <a href="#" data-role="popover" 
+                            data-popover-text="The biased test as the name depicts, is designed to estimate by how much cameron agrees with a predefined diagnosis. You can input a mental health condition you have already been pre-diagnosed with by another service or therapist, then Cameron’s questions will be tailored to test for that specific mental health condition. The test includes 15 - 25 questions depending on the medical health condition supplied." 
+                            data-hide-on-leave="true" data-popover-hide="0">
+                            <h7><i class="bi bi-question-circle" style="color:#FFFFFF"></i></h7>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2 ms-3 bg-secondary py-3 px-3" style="border-radius:15px;height:auto;">
+        <span style="font-weight:600;font-size:15px;">History</span>
+        <hr class="my-2" />
+        <!-- Body -->
+        <div class="d-flex flex-column ">
+        <ul class="px-3">
+            @{
+                Int32 idx;
+                if (Model.tests.Count > 2) idx = 2;
+                else idx = Model.tests.Count;
+            }
+            @foreach (CameronTest test in Model.tests.GetRange(0, idx)) {
+                <li style="font-size:10px" class="mb-1">
+                    @if (test.Status == SD.test_status_processing) {
+                        <div class="link">Id: @test.Id | Processing ...</div>
+                    }
+                    else if (test.Status == SD.test_status_ready) {
+                        <div class="link">Id: @test.Id | @test.Result</div>
+                    }
+                    <div>@test.TestType</div>
+                    <div>@test.CreatedAt</div>
+                </li>
+            }
+        </ul>
+            @if (Model.tests.Count > 2) {
+                <a class="link" style="margin-top:10px;font-size:10px;font-weight:600;"
+                    asp-area="Patient" asp-controller="Cameron" asp-action="History">
+                    show full history&nbsp;&nbsp;<i class="bi bi-arrow-right"></i>
+                </a>
+            }
+        </div>
+    </div>
+</div>

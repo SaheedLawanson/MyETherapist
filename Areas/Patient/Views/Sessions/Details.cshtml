@@ -1,0 +1,150 @@
+@using etherapist.Models.ViewModels
+@using etherapist.Utility
+@model SessionVM
+
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<div class="col bg-grey mt-5" style="padding:2rem 5rem 5rem 8rem;margin-left:25%">
+    <!-- First Half -->
+    <div class="d-flex flex-column align-items-center mb-3">
+        <!-- Session Progress -->
+        <div class="link mb-3" style="font-weight:600">Session Progress</div>
+        <!-- Session Progress indicators -->
+        <div class="c-progress-list mb-4">
+            <div class="c-progress-item">
+                <div class="c-progress-icon">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                <div class="c-progress-label">Session Approved</div>
+            </div>
+            <div class="c-progress-item">
+                <div class="c-progress-icon">
+                @if (Model.session.Status > SD.session_awaitingTherapistAssign) {
+                    <i class="bi bi-check-lg"></i>
+                }
+                else {
+                    <div class="spinner-border c-listbar-progress-icon" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                }
+                </div>
+            <div class="c-progress-label">Assigning Therapist</div>
+            </div>
+            <div class="c-progress-item">
+                <div class="c-progress-icon">
+                @if (Model.session.Status >= SD.session_completed) {
+                    <i class="bi bi-check-lg"></i>
+                }
+                else {
+                    <div class="spinner-border c-listbar-progress-icon" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                }
+                </div>
+                <div class="c-progress-label">Awaiting Acknowledgement</div>
+            </div>
+        </div>
+        <div class="mb-3" style="color:#8E8E8E;font-weight:600">Your Session was created successfully</div>
+        <div class="d-flex" style="background-color:white;padding:.25rem 1rem;font-weight:600;">
+            SESSION ID:&nbsp;&nbsp;<div class="link">@Model.session.Id</div>
+        </div>
+    </div>
+    <!-- Second Half -->
+    <div>
+        <!-- Your Session -->
+        <div class="mb-4">
+            <div class="mb-2 link" style="font-weight:600">YOUR SESSION</div>
+            <div class="d-flex flex-column bg-secondary p-4" style="width:100%;border-radius:15px">
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="color:#8E8E8E">Mental Condition:</div>
+                    <div>@Model.session.MentalCondition</div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="color:#8E8E8E">Scheduled Date:</div>
+                    <div>@Model.session.ScheduledTime.ToLongDateString()</div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="color:#8E8E8E">Scheduled Time:</div>
+                    <div>@Model.session.ScheduledTime.ToShortTimeString()</div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="color:#8E8E8E">Start Time:</div>
+                    @if (Model.session.StartTime == null) {
+                        <div>??</div>
+                    }
+                    else {
+                        <div>@Model.session.StartTime</div>
+                    }
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div style="color:#8E8E8E">Time Span</div>
+                    @if (Model.session.StartTime == null) {
+                        <div>??</div>
+                    }
+                    else {
+                        <div>@Model.session.MeetingSpan</div>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Additional Information -->
+        <div class="mb-4">
+            <div class="mb-2 link" style="font-weight:600">ADDITIONAL INFORMATION</div>
+            <div class="d-flex flex-column bg-secondary p-4" style="width:100%;border-radius:15px">
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="color:#8E8E8E">Therapist's Name:</div>
+                    @if (Model.session.TherapistId != null && Model.session.Status == SD.session_completed) {
+                        <div>@($"{Model.session.Therapist.FirstName} {Model.session.Therapist.LastName}") </div>
+                    }
+                    else {
+                        <div>??</div>
+                    }
+                </div>
+                @* <div class="d-flex justify-content-between">
+                    <div style="color:#8E8E8E">Specialization:</div>
+                    <div>Depression</div>
+                </div> *@
+            </div>
+        </div>
+        <!-- Rate your experience -->
+        <div class="mb-4">
+            <div class="mb-2 link" style="font-weight:600">RATE YOUR EXPERIENCE</div>
+            <form class="d-flex flex-column bg-secondary p-4 w-100" style="border-radius:15px" method="post" 
+                asp-area="Patient" asp-controller="Sessions" asp-action="Rate"> 
+                @if (Model.session.Status >= SD.session_sessionCompleted) {
+                    <input asp-for="@Model.session.Id" hidden />
+                    <partial name="_Rate" model="@Model" />
+                    <div class="d-flex justify-content-between mb-3">
+                        <div style="color:#8E8E8E">Comment:</div>
+                        <div class="w-100 d-flex flex-row justify-content-end">
+                            <textarea class="w-50" asp-for="@Model.session.Comment"></textarea>
+                            <span asp-validation-for="session.Comment"></span>
+                        </div>
+                    </div>
+                    <div class="w-100 d-flex">
+                        <button class="btn px-2 py-1 bg-primary" style="text-decoration:none;margin-left:auto;border-radius:10px;"
+                            type="submit">
+                            submit
+                        </button>
+                    </div>
+                }
+                else {
+                    <partial name="_Rate" model="@Model" />
+                    <div class="d-flex justify-content-between mb-3">
+                        <div style="color:#8E8E8E">Comment:</div>
+                        <textarea class="w-50" disabled></textarea>
+                    </div>
+                }
+            </form>
+        </div>
+        <!-- Back to session button -->            
+        <a class="btn btn-primary" style="border-radius:10px;width:40%" 
+            asp-area="Patient" asp-controller="Sessions" asp-action="Index">
+            <i class="bi bi-arrow-left" style="color:white"></i>
+            &nbsp;Back to Sessions List
+        </a>                
+    </div>
+</div>

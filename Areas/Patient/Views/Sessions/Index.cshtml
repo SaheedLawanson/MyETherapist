@@ -1,0 +1,87 @@
+@using etherapist.Utility
+@using etherapist.Models.ViewModels
+@model SessionVM
+
+@{
+    String status = Context.Request.Query["status"];
+    String processing = "text-primary";
+    String approved = "text-primary";
+    String completed = "text-primary";
+    String all = "text-primary";
+
+    switch (status) {
+        case "processing":
+            processing = "active text-white";
+            break;
+        case "approved":
+            approved = "active text-white";
+            break;
+        case "completed":
+            completed = "active text-white";
+            break;
+        default:
+            all = "active text-white";
+            break;
+    }
+}
+
+<div class="col bg-grey mt-5" style="padding:4rem 5rem 5rem 8rem;margin-left:25%;height:100vh">
+    <div>
+        <!-- Title -->
+        <div class="d-flex justify-content-between mb-3">
+            <div class="link">SESSION HISTORY</div>
+            <div>
+                <ul class="list-group list-group-horizontal-sm">
+                    <a style="text-decoration:none;font-size:12px;" asp-controller="Sessions" asp-action="Index" asp-route-status="processing">
+                        <li class="list-group-item @processing">Processing</li>
+                    </a>
+                    <a style="text-decoration:none;font-size:12px;" asp-controller="Sessions" asp-action="Index" asp-route-status="approved">
+                        <li class="list-group-item @approved">Approved</li>
+                    </a>
+                    <a style="text-decoration:none;font-size:12px;" asp-controller="Sessions" asp-action="Index" asp-route-status="completed">
+                        <li class="list-group-item @completed">Completed</li>
+                    </a>
+                    <a style="text-decoration:none;font-size:12px;" asp-controller="Sessions" asp-action="Index" asp-route-status="all">
+                        <li class="list-group-item @all">All</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <!-- Sessions -->
+        <div>
+            @if (Model.sessions.Count != 0) {
+                @foreach (Session session in Model.sessions) {
+                    <a class="btn c-listbar mb-3" asp-area="Patient" asp-controller="Sessions" asp-action="Details" asp-route-myId="@session.Id">
+                        <div class="c-listbar-left">
+                            <div class="c-listbar-progress">
+                                @if (session.Status < SD.session_completed) {
+                                        <div class="spinner-border c-listbar-progress-icon" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    }
+                                else {
+                                    <h1><i class="bi bi-check link"></i></h1>
+                                }
+                            </div>
+                            <div class="c-listbar-label">
+                                <div class="c-listbar-topic">@session.MentalCondition</div>
+                                <div class="c-listbar-sub"> @session.Subscription.PlanName</div>
+                            </div>
+                        </div>
+                        <div class="c-listbar-right">
+                            <div class="c-listbar-id">@session.Id</div>
+                            <div class="c-listbar-time">@session.ScheduledTime</div>
+                        </div>
+                    </a>
+                }
+            }
+            else {
+                <div style="min-height:50vh;width:100%;color:#707070" class="d-flex align-items-center justify-content-center">
+                    When you create a session, it'll appear here
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+</div>

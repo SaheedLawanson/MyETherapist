@@ -1,0 +1,43 @@
+@model List<CameronTest>
+@using etherapist.Utility
+
+<div class="col bg-grey mt-5" style="padding:4rem 5rem 5rem 8rem;margin-left:25%">
+    <div>
+        <!-- Title -->
+        <div class="d-flex mb-3">
+            <div class="link" style="font-weight:600">CAMERON DIAGNOSES</div>
+        </div>
+        <!-- Sessions -->
+        <div>
+            @foreach (CameronTest test in Model) {
+                <div class="c-listbar mb-3">
+                    <div class="c-listbar-left">
+                        <div class="c-listbar-progress">
+                            @if (test.Status == SD.test_status_processing) {
+                                <div class="spinner-border c-listbar-progress-icon" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            }
+                            else if (test.Status == SD.test_status_ready) {
+                                <h7 class='display-5'><i class="link bi bi-check"></i></h7>
+                            }
+                        </div>
+                        <div class="c-listbar-label">
+                            @if (test.Status == SD.test_status_processing) {
+                                <div class="c-listbar-topic">??</div>
+                            }
+                            else if (test.Status == SD.test_status_ready) {
+                                <div class="c-listbar-topic">@test.Result</div>
+                            }
+                            <div class="c-listbar-sub">@test.TestType</div>
+                        </div>
+                    </div>
+                    <div class="c-listbar-right">
+                        <div class="c-listbar-id">@test.Id</div>
+                        <div class="c-listbar-time">@test.CreatedAt</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

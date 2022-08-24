@@ -1,0 +1,139 @@
+@using etherapist.Utility
+@using etherapist.Models.ViewModels
+@model SessionVM
+
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<div class="col bg-grey py-5 mt-5" style="margin-left:25%;">
+    <!-- Header -->
+    <form class="m-auto px-5 py-5 bg-secondary" style="width:80%;border-radius:15px;" method="post">
+        <input asp-for="@Model.session.Id" hidden />
+        <div class="c-qa-title mb-4">
+            <div class="link" style="font-weight:600">SESSION DETAILS</div>
+            @if(Model.session.TherapistId == null) {
+                <button type="submit" class="btn bg-primary"  
+                    style="padding:.25rem 1rem;border-radius:10px">
+                    Approve
+                </button>
+            }
+            else {
+                <button type="submit" class="btn bg-primary"  
+                    style="padding:.25rem 1rem;border-radius:10px" disabled>
+                    Approve
+                </button>
+            }
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Patient Name:</div>
+            <div class="c-qa-body-a">
+                <input value='@($"{Model.session.Patient.FirstName} {Model.session.Patient.LastName}")' disabled />
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Mental Condition:</div>
+            <div class="c-qa-body-a">
+                <input asp-for="@Model.session.MentalCondition" disabled />
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Assigned Therapist:</div>
+            <div class="c-qa-body-a">
+                @if(Model.session.TherapistId == null) {
+                    <select asp-for="@Model.session.Therapist.Id" asp-items="@Model.therapists">
+                        <option>None</option>
+                    </select>
+                }
+                else {
+                    <select asp-for="@Model.session.Therapist.Id" asp-items="@Model.therapists" disabled>
+                        <option>@Model.session.Therapist.FirstName @Model.session.Therapist.LastName</option>
+                    </select>
+                }
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Start Time:</div>
+            <div class="c-qa-body-a">
+                @if (Model.session.StartTime != null) {
+                    <input asp-for="@Model.session.StartTime" disabled />
+                }
+                else {
+                    <p>??</p>
+                }
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Stop Time:</div>
+            <div class="c-qa-body-a">
+                @if (Model.session.StopTime != null) {
+                    <input asp-for="@Model.session.StopTime" disabled />
+                }
+                else {
+                    <p>??</p>
+                }
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Scheduled Time:</div>
+            <div class="c-qa-body-a">
+                <input asp-for="@Model.session.ScheduledTime" disabled />
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Meeting Span:</div>
+            <div class="c-qa-body-a">
+                @if (Model.session.MeetingSpan != null) {
+                    <input asp-for="@Model.session.MeetingSpan" disabled />
+                }
+                else {
+                    <p>??</p>
+                }
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Session ID:</div>
+            <div class="c-qa-body-a">
+                <input asp-for="@Model.session.Id" disabled />
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Meeting Type:</div>
+            <div class="c-qa-body-a">
+                <input asp-for="@Model.session.MeetingType" disabled />
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Ratings:</div>
+            <div class="c-qa-body-a">
+                @if (Model.session.Rating != null) {
+                    <input asp-for="session.Rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+                        data-value="@Model.session.Rating" disabled/>
+                }
+                else {
+                    <input asp-for="session.Rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+                        data-value="0" disabled/>
+                }
+            </div>
+        </div>
+        <div class="c-qa-body mb-4">
+            <div class="c-text-disabled">Comments:</div>
+            <div class="c-qa-body-a">
+                @if (Model.session.Comment != null) {
+                    <input asp-for="@Model.session.Comment" disabled />
+                }
+                else {
+                    <p>??</p>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    p {
+        padding: 0rem;
+        margin: 0rem;
+    }
+</style>

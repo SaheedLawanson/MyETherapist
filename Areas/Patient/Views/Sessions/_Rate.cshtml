@@ -1,0 +1,15 @@
+@using etherapist.Utility
+@using etherapist.Models.ViewModels
+@model SessionVM
+
+<div class="d-flex justify-content-between mb-3">
+    <div style="color:#8E8E8E">Rating:</div>
+    @if (Model.session.Status == SD.session_sessionCompleted) {
+        <input asp-for="session.Rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+            data-value="@Model.session.Rating" />
+    }
+    else {
+        <input data-role="rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+            data-value="@Model.session.Rating" disabled />
+    }
+</div>

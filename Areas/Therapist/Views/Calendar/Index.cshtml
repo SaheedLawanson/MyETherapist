@@ -1,0 +1,40 @@
+@using etherapist.Models.ViewModels
+@model CalendarVM
+@* @{
+    Layout = null;
+} *@
+
+
+@* <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css"> *@
+@* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/etherapist.styles.css" asp-append-version="true" /> *@
+
+<div class="container-fluid d-flex flex-column px-0 py-0 bg-grey" style="margin-left:25%">
+    <!-- Main -->
+    <div class="bg-grey mt-5" style="width:75%;padding:4rem 5rem 5rem 8rem;">
+        <div style="width:100%;">
+            <!-- Title -->
+            <div class="d-flex mb-3">
+                <div class="link">SCHEDULE</div>
+            </div>
+            <!-- Sessions -->
+            <div>
+                @if(Model != null) {
+                    <div data-role="calendar" data-wide-point="sm" data-preset="@Model.presets" data-buttons="today"></div>
+                }
+                else {
+                    <div data-role="calendar" data-wide-point="sm" data-buttons="today"></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script> *@
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script> *@

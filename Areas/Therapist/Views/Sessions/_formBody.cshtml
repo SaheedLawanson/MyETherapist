@@ -1,0 +1,115 @@
+@using etherapist.Utility
+@model Session
+
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Patient Name:</div>
+        <div class="c-qa-body-a">
+            <input value='@($"{Model.Patient.FirstName} {Model.Patient.LastName}")' disabled />
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Mental Condition:</div>
+        <div class="c-qa-body-a">
+            <input asp-for="@Model.MentalCondition" disabled />
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Assigned Therapist:</div>
+        <div class="c-qa-body-a">
+            @if(Model.TherapistId == null) {
+                <select asp-for="@Model.Therapist.Id">
+                    <option>None</option>
+                </select>
+            }
+            else {
+                <select asp-for="@Model.Therapist.Id" disabled>
+                    <option>@Model.Therapist.FirstName @Model.Therapist.LastName</option>
+                </select>
+            }
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Start Time:</div>
+        <div class="c-qa-body-a">
+            @if (Model.StartTime != null) {
+                <input asp-for="@Model.StartTime" disabled />
+            }
+            else {
+                @if (Model.Status == SD.session_completed) {
+                    <input asp-for="@Model.StartTime" data-role="timepicker" data-seconds="false" />
+                }
+                else {
+                    <p>??</p>
+                }
+            }
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Stop Time:</div>
+        <div class="c-qa-body-a">
+            @if (Model.StopTime != null) {
+                <input asp-for="@Model.StopTime" disabled />
+            }
+            else {
+                @if (Model.Status == SD.session_completed) {
+                    <input asp-for="@Model.StopTime" data-role="timepicker" data-seconds="false" />
+                }
+                else {
+                    <p>??</p>
+                }
+            }
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Scheduled Time:</div>
+        <div class="c-qa-body-a">
+            <input asp-for="@Model.ScheduledTime" disabled />
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Meeting Span:</div>
+        <div class="c-qa-body-a">
+            @if (Model.MeetingSpan != null) {
+                <input asp-for="@Model.MeetingSpan" disabled />
+            }
+            else {
+                <p>??</p>
+            }
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Session ID:</div>
+        <div class="c-qa-body-a">
+            <input asp-for="@Model.Id" disabled />
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Meeting Type:</div>
+        <div class="c-qa-body-a">
+            <input asp-for="@Model.MeetingType" disabled />
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Ratings:</div>
+        <div class="c-qa-body-a">
+            @if (Model.Rating != null) {
+                <input asp-for="Rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+                    data-value="@Model.Rating" disabled/>
+            }
+            else {
+                <input asp-for="Rating" data-role="rating" data-star-color="#AB0029" data-stared-color="#AB0029" 
+                    data-value="0" disabled/>
+            }
+        </div>
+    </div>
+    <div class="c-qa-body mb-4">
+        <div class="c-text-disabled">Comments:</div>
+        <div class="c-qa-body-a">
+            @if (Model.Comment != null) {
+                <input asp-for="@Model.Comment" disabled />
+            }
+            else {
+                <p>??</p>
+            }
+        </div>
+    </div>

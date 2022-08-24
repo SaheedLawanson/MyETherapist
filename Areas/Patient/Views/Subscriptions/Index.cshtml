@@ -1,0 +1,82 @@
+@using etherapist.Models.ViewModels
+@model SubscriptionVM
+
+<div class="col bg-grey py-5 mt-5" style="margin-left:25%;">
+    <!-- Header -->
+    <div class="m-auto px-5 py-5 bg-secondary" style="width:80%;border-radius:15px;">
+        <div style="font-weight:600;font-size:30px;">
+            Subscriptions
+        </div>
+        <hr />
+        <!-- Body -->
+        <div class="py-3">
+            <!-- Active Subscription -->
+            <div>
+                <div style="font-size:20px" class="mb-3">
+                    Active Subscription
+                    <a asp-area="Patient" asp-controller="Subscriptions" asp-action="Create">
+                      <i class="bi bi-plus-circle-fill ms-2"></i>  
+                    </a>
+                </div>
+                @if (Model.ActiveSubscription == null) {
+                    <div class="py-3 d-flex align-items-center justify-content-center" 
+                        style="min-height:15vh;color:#707070">
+                        You currently have no subscription, click &nbsp;<a class="link">here</a>&nbsp; to subscribe now
+                    </div>
+                }
+                else {
+                    <table class="table table-dark table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="color:white">Id</th>
+                                <th scope="col" style="color:white">Status</th>
+                                <th scope="col" style="color:white">Sessions Left</th>
+                                <th scope="col" style="color:white">Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th scope="row">@Model.ActiveSubscription.Id</th>
+                            <td>@Model.ActiveSubscription.Status</td>
+                            <td>@Model.ActiveSubscription.SessionsLeft</td>
+                            <td>@Model.Subscriptions[Model.ActiveSubscription.SubscriptionId -1].PlanName</td>
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <!-- Subscription History -->
+            <div>
+                <div style="font-size:20px" class="mb-3">
+                    Subscription History
+                </div>
+                @if (Model.PSubscriptions.Count == 0) {
+                    <div class="py-3 d-flex align-items-center justify-content-center" 
+                        style="min-height:15vh;color:#707070">
+                        When you create a subscription, it will be shown here
+                    </div>
+                }
+                else {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Sessions Left</th>
+                                <th scope="col">Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(PatientSubscription pSub in Model.PSubscriptions) {
+                                <tr>
+                                    <th scope="row">@pSub.Id</th>
+                                    <td>@pSub.Status</td>
+                                    <td>@pSub.SessionsLeft</td>
+                                    <td>@Model.Subscriptions[pSub.SubscriptionId -1].PlanName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>

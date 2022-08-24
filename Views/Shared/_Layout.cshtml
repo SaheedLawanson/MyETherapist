@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using etherapist.Utility
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - etherapist</title>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/etherapist.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @if (SignInManager.IsSignedIn(User)) {
+            if (User.IsInRole(SD.Role_Patient)){
+                <!-- Nav bar: Patient -->
+                <partial name="_NavbarPatient" />
+                <!-- Sidebar: Patient -->
+                <partial name="_SidebarPatient" />
+            }
+            else if (User.IsInRole(SD.Role_Admin)) {
+                <!-- Nav bar: Admin -->
+                <partial name="_NavbarAdmin" />
+                <!-- Sidebar: Admin -->
+                <partial name="_SidebarAdmin" />
+            }
+            else {
+                <!-- Nav bar: Therapist -->
+                <partial name="_NavbarTherapist" />
+                <!-- Sidebar: Therapist -->
+                <partial name="_SidebarTherapist" />
+            }
+        }
+        else {
+            <!-- Nav bar -->
+            <partial name="_NavbarPatient" />
+        }
+
+    </header>
+        <main role="main" class="pb-3">
+            <div class="container-fluid row px-0 py-0">
+                <partial name="_Notifications" />
+                @RenderBody()
+            </div>
+        </main>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - etherapist - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            var page = sessionStorage.getItem('page');
+            var sidebar = document.querySelectorAll('.c-sidebar-item');
+
+            if (page == null) {
+                $(sidebar[0]).addClass('active');
+            } else {
+                sidebar.forEach((item, index) => {
+                    if (item.href == page) {
+                        $(item).addClass('active').siblings().removeClass('active');
+                        console.log(item.href)
+                    }
+                });
+            }
+        })
+
+        $(document).on('click', '.c-sidebar-item', function () {
+            var x = this.href;
+            console.log(this)
+            window.stop()
+            sessionStorage.setItem('page', x);
+        });
+    </script>
+</body>
+</html>

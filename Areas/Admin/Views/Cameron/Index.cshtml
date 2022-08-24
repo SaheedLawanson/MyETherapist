@@ -1,0 +1,89 @@
+@model List<CameronTest>
+@using etherapist.Utility
+
+@{
+    String status = Context.Request.Query["testType"];
+    String quickEstimate = "text-primary";
+    String iAndS = "text-primary";
+    String biasedTest = "text-primary";
+    String all = "text-primary";
+
+    switch (status) {
+        case SD.testQE:
+            quickEstimate = "active text-white";
+            break;
+        case SD.testIAndS:
+            iAndS = "active text-white";
+            break;
+        case SD.testBT:
+            biasedTest = "active text-white";
+            break;
+        default:
+            all = "active text-white";
+            break;
+    }
+}
+
+    <div class="col bg-grey mt-5" style="padding:4rem 5rem 5rem 8rem;margin-left:25%">
+        <div>
+            <!-- Title -->
+            <div class="d-flex justify-content-between mb-3">
+                <div class="link" style="font-weight:600">CAMERON DIAGNOSES</div>
+                <div>
+                    <ul class="list-group list-group-horizontal-sm">
+                        <a style="text-decoration:none;" asp-controller="Cameron" asp-action="Index" asp-route-testType="@SD.testQE">
+                            <li class="list-group-item @quickEstimate" style="font-size:12px">Quick Estimate</li>
+                        </a>
+                        <a style="text-decoration:none" asp-controller="Cameron" asp-action="Index" asp-route-testType="@SD.testIAndS">
+                            <li class="list-group-item @iAndS" style="font-size:12px">I and T</li>
+                        </a>
+                        <a style="text-decoration:none" asp-controller="Cameron" asp-action="Index" asp-route-testType="@SD.testBT">
+                            <li class="list-group-item @biasedTest" style="font-size:12px">Biased Test</li>
+                        </a>
+                        <a style="text-decoration:none" asp-controller="Cameron" asp-action="Index" asp-route-testType="all">
+                            <li class="list-group-item @all" style="font-size:12px">All</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+            <!-- Sessions -->
+            <div>
+            @if (Model.Count != 0) {
+                    @foreach (CameronTest test in Model) {
+                        <button class="c-listbar mb-3">
+                            <div class="c-listbar-left">
+                                <div class="c-listbar-progress">
+                                    @if (test.Status == SD.test_status_processing) {
+                                        <div class="spinner-border c-listbar-progress-icon" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    }
+                                    else if (test.Status == SD.test_status_ready) {
+                                        <h7 class='display-5'><i class="link bi bi-check"></i></h7>
+                                    }
+                                </div>
+                                <div class="c-listbar-label">
+                                    @if (test.Status == SD.test_status_processing) {
+                                        <div class="c-listbar-topic">??</div>
+                                    }
+                                    else if (test.Status == SD.test_status_ready) {
+                                        <div class="c-listbar-topic">@test.Result</div>
+                                    }
+                                    <div class="c-listbar-sub">@test.TestType</div>
+                                </div>
+                            </div>
+                            <div class="c-listbar-right">
+                                <div class="c-listbar-id">@test.Id</div>
+                                <div class="c-listbar-time">@test.CreatedAt</div>
+                            </div>
+                        </button>
+                    }
+                }
+                else {
+                    <div style="min-height:50vh;width:100%;color:#707070" class="d-flex align-items-center justify-content-center">
+                        When a diagnoses test is taken, it'll appear here
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

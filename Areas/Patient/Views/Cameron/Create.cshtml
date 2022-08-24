@@ -1,0 +1,46 @@
+@using etherapist.Utility
+@using Microsoft.Extensions.Options
+@using etherapist.Models.ViewModels
+@model CameronVM
+@inject IOptions<BulkyBook.Utility.StripeSettings> Stripe
+
+<!-- Main -->
+<div class="col bg-grey py-5 mt-5" style="margin-left:25%;">
+    <div class="m-auto p-5 bg-secondary" style="width:80%;border-radius:15px;">
+        <!-- Header -->
+        <div style="font-weight:600;font-size:30px;">
+            Cameron: Quick Estimate
+        </div>
+        <hr />
+        <!-- Body -->
+        @* <partial name="./CameronTestForm" model="pModel" view-data="ViewData" /> *@
+            <form method="post">
+            <div class="mb-3" style="font-size:20px;font-weight:600;">Select the options that are applicable to you.</div>
+            @foreach(CameronQuestion question in Model.questions) {
+                <div style="max-width: 500px" class="mb-5">
+                    <div style="font-size:20px" class="mb-2">Question @question.Id</div>
+                    <input type="radio" class="btn-check" name="question_@question.Id" id="question1_@question.Id" value="@question.OptionAValue">
+                    <label class="btn btn-outline-secondary mb-2 w-100 d-flex justify-content-start" 
+                        style="font-size:15px;height:40px;" for="question1_@question.Id">@question.OptionA</label>
+
+                    <input type="radio" class="btn-check" name="question_@question.Id" id="question2_@question.Id" value="@question.OptionBValue">
+                    <label class="btn btn-outline-secondary mb-2 w-100 d-flex justify-content-start" 
+                        style="font-size:15px;height:40px;" for="question2_@question.Id">@question.OptionB</label>
+                            
+                    <input type="radio" class="btn-check" name="question_@question.Id" id="question3_@question.Id" value="@question.OptionCValue">
+                    <label class="btn btn-outline-secondary mb-2 w-100 d-flex justify-content-start" 
+                        style="font-size:15px;height:40px;" for="question3_@question.Id">@question.OptionC</label>
+                                                    
+                    <input type="radio" class="btn-check" name="question_@question.Id" id="question4_@question.Id" value="@question.OptionDValue">
+                    <label class="btn btn-outline-secondary mb-2 w-100 d-flex justify-content-start" 
+                        style="font-size:15px;height:40px;" for="question4_@question.Id">@question.OptionD</label>
+                </div>
+            }
+            <div class="d-flex w-100">
+                <button class="c-cameron-button ms-auto">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

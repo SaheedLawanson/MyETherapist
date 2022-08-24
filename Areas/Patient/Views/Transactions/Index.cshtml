@@ -1,0 +1,39 @@
+    <div class="container row p-5 mx-auto">
+        <!-- Side Menu -->
+        <div class="col-3 b-y bs p-0 d-flex align-items-center" 
+            style="height:auto;">
+            <div style="width:100%">
+                <div class="ps-3 mb-5">
+                    <h3>Saheed Lawanson</h3>
+                </div>
+                <div class="list-group">
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" class="list-group-item">Profile</a>
+                    <a asp-area="Patient" asp-controller="Subscriptions" asp-action="Index" class="list-group-item">Subscriptions</a>
+                    <a asp-area="Patient" asp-controller="Transactions" asp-action="Index" class="list-group-item active">Transactions History</a>
+                    <a asp-area="Patient" asp-controller="Patient" asp-action="Privacy" class="list-group-item">Privacy</a>
+                    <a asp-area="Patient" asp-controller="Patient" asp-action="Notifications" class="list-group-item">Notifications</a>
+                </div>
+            </div>
+        </div>
+        <!-- Main Section -->
+        <div class="col-9 b-y bs be p-0" style="height:auto;min-height:70vh;">
+            <!-- Title section -->
+            <div class="bb pt-2 d-flex flex-column align-items-center justify-content-center" 
+                style="height:18vh;width:100%;">
+                    <h2>Transactions</h2>
+                    <p>View Transaction history</p>
+            </div>
+            <!-- Transaction details -->
+            <div class="pt-3 pb-5 px-5">
+                <!-- Sub history -->
+                <div>
+                    <p class="mb-3" style="font-size:1.5rem;">Transaction History</p>
+                    <div class="d-flex align-items-center justify-content-center" style="height:10vh">
+                        <p style="color:rgba(0, 0, 0 , .525)">
+                            When you make a Transaction, it will be shown here
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

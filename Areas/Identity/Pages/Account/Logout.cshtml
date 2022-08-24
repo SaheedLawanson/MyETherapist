@@ -1,0 +1,26 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using etherapist.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model LogoutModel
+
+@{
+       Layout = null;
+}
+
+<header>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {            
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "Home" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+            </form>
+        }
+        else
+        {
+            <p>You have successfully logged out of the application.</p>
+        }
+    }
+</header>

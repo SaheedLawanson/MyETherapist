@@ -1,0 +1,52 @@
+<div class="col-3 c-sidebar c-sidebar-shadow">
+    <!-- Main menu -->
+    <div class=" c-sidebar-menu">
+        <h1 class="c-sidebar-header">Main Menu</h1>
+        <div class="c-sidebar-item-list">
+        <!-- Sessions -->
+            <a class="c-sidebar-item active" asp-area="Patient" asp-controller="Sessions" asp-action="Index">
+                <div class="c-sidebar-item-icon">
+                    <i class="bi bi-clock-fill"></i>
+                </div>
+                <span class="c-sidebar-item-text">
+                    Sessions
+                </span>
+            </a>
+            <!-- Subscriptions -->
+            <a class="c-sidebar-item" asp-area="Patient" asp-controller="Subscriptions" asp-action="Index">
+                <div class="c-sidebar-item-icon">
+                    <i class="bi bi-collection-play-fill"></i>
+                </div>
+                <span class="c-sidebar-item-text">
+                    Subscriptions
+                </span>
+            </a>
+            <!-- Cameron -->
+            <a class="c-sidebar-item" asp-area="Patient" asp-controller="Cameron" asp-action="Index">
+                <div class="c-sidebar-item-icon">
+                    <i class="bi bi-robot"></i>
+                </div>
+                <span class="c-sidebar-item-text">
+                    Cameron
+                </span>
+            </a>
+        </div>
+    </div>
+    <button class="c-sidebar-action-button">
+        <i class="bi bi-calendar2-week-fill"></i>
+        @* <svg class="bi" width="32" height="32" fill="white">
+            <use xlink:href="bootstrap-icons.svg#calendar2-week-fill"/>
+        </svg> *@
+        <a asp-area="Patient" asp-controller="Sessions" asp-action="Create" style="text-decoration:none;color:white">
+            Create a Session now
+        </a>
+    </button>
+    <div class="c-sidebar-footer">
+        <div style="font-weight:500">
+            Etherapist patient dashboard
+        </div>
+        <div>
+            © 2022 All rights reserved
+        </div>
+    </div>
+</div>

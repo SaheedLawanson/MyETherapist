@@ -1,0 +1,56 @@
+@using etherapist.Models.ViewModels
+@model SessionVM
+
+<div class="col bg-grey py-5 mt-5" style="margin-left:25%;">
+    <div class="m-auto p-5 bg-secondary" style="width:80%;border-radius:15px;">
+        <!-- Header -->
+        <div style="font-weight:600;font-size:30px;">
+            Create Session
+        </div>
+        <hr />
+        <!-- Body -->
+        <div>
+            <form method="post">
+                <!-- Question 1 -->
+                <div class="mb-3">
+                    <label asp-for="@Model.session.MentalCondition" class="form-label">
+                        1. What Mental Health issue do you want to be treated for?
+                    </label>
+                    <select asp-for="@Model.session.MentalCondition" asp-items="@Model.mentalConditionList" class="form-select">
+                        <option> -- Choose -- </option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.session.MentalCondition"></span>
+                    <div class="form-check">
+                        <input class="form-check-input small1" type="checkbox" value="" id="flexCheckDefault">
+                        <label style="font-size:10px" class="form-check-label" for="flexCheckDefault">
+                            Use Cameron's diagnosis?
+                        </label>
+                    </div> 
+                </div>
+                <!-- Question 2 -->
+                <div class="mb-3">
+                    <label asp-for="@Model.session.SpecialNeeds" class="form-label">
+                        2. Do you have any special needs that need to be considered before this session
+                    </label>
+                    <textarea asp-for="@Model.session.SpecialNeeds" class="form-control" id="specialNeeds"></textarea>
+                    <span class="text-danger" asp-validation-for="@Model.session.SpecialNeeds"></span>
+                </div>
+                <!-- Question 3 -->
+                <div class="mb-3">
+                    <label asp-for="@Model.session.ScheduledTime" class="form-label">
+                        3. Choose your most convenient date and time for this session
+                    </label>
+                    <input asp-for="@Model.Date" type="text" data-role="calendarpicker" data-input-format="%y/%m/%d">
+                    <input asp-for="@Model.Time" data-role="timepicker" data-seconds="false">
+                </div>
+                <!-- Submit -->
+                <div style="width: 100%;padding-left:70%">
+                <button type="submit" class="btn btn-login mt-3">
+                    Create Session
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

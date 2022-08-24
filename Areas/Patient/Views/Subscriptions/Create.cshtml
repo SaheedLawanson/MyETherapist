@@ -1,0 +1,35 @@
+@using etherapist.Models.ViewModels
+@model SubscriptionVM
+
+<!-- Main -->
+<div class="col bg-grey py-5 mt-5" style="margin-left:25%">
+    <!-- Header -->
+    <div class="m-auto px-5 py-5 bg-secondary" style="width:90%;border-radius:15px;">
+        <div style="font-weight:600;font-size:30px;">
+            <a asp-area="Patient" asp-controller="Subscriptions" asp-action="Index">
+                <i class="bi bi-arrow-left"></i>
+            </a>&nbsp;&nbsp;Choose your plan
+        </div>
+        <hr />
+        <!-- Body -->
+        <div class="pt-3 row">
+            @foreach(Subscription sub in Model.Subscriptions) {
+                <form class="c-sub-card col me-5" method="post" asp-route-myId="@sub.Id">
+                    @if (sub.PlanName == "Monthly Plan") {
+                        <div id="c-sub-card-recommend">
+                            <p style="margin:0px">Recommended</p>
+                        </div>
+                    }
+                    <div class="c-sub-info">
+                        <div class="c-sub-name">@sub.PlanName</div>
+                        <div class="c-sub-price">@sub.Price NGN</div>
+                        <button type="submit" class="c-sub-submit">Choose</button>
+                    </div>
+                    <div class="c-sub-benefits">
+                        @sub.Benefits
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>

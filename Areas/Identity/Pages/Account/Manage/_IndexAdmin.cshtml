@@ -1,0 +1,27 @@
+@model IndexModel
+
+<div class="d-flex flex-column align-items-center col-8 container" style="margin:auto;padding:8rem 0rem;">
+    <div class="p-5" style="width:70%;background-color:white;border-radius:15px;border:.5px solid #D2D2D2">
+        <h2 class="mb-5">My Profile</h2>
+        <partial name="_StatusMessage" for="StatusMessage" />
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label">First Name</label>
+                <input asp-for="FirstName" type="text" class="form-control" id="firstName">
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label">Last Name</label>
+                <input asp-for="LastName" type="text" class="form-control" id="lastName">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
+                <input asp-for="Input.PhoneNumber" class="form-control" id="phoneNumber">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <input type="text" class="form-control" id="gender">
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
