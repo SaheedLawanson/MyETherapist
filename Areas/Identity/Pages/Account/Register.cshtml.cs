@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using etherapist.Data;
 using etherapist.Models;
 using etherapist.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -34,14 +35,17 @@ namespace etherapist.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _db;
+        
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager    
+            ILogger<RegisterModel> logger,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext db    
         )
         {
             _userManager = userManager;
@@ -51,6 +55,7 @@ namespace etherapist.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _db = db;
         }
 
         /// <summary>
@@ -117,7 +122,6 @@ namespace etherapist.Areas.Identity.Pages.Account
             public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
-
         public async Task OnGetAsync(string returnUrl = "/Patient/Sessions/Index")
         {
             ReturnUrl = returnUrl;
@@ -127,6 +131,7 @@ namespace etherapist.Areas.Identity.Pages.Account
                     name => new SelectListItem{Text=name, Value=name}
                 )
             };
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

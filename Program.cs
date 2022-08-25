@@ -19,12 +19,12 @@ builder.Services.AddDbContext<ApplicationDbContext> (
 );
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
-    // options => options.SignIn.RequireConfirmedAccount = true
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+    options => options.SignIn.RequireConfirmedAccount = true
     ).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.ConfigureApplicationCookie(options => {
@@ -50,7 +50,7 @@ app.UseRouting();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey")
     .Get<String>();
-// seedDatabase();
+seedDatabase();
 
 app.UseAuthentication();
 
@@ -70,9 +70,9 @@ app.MapRazorPages();
 app.Run();
 
 
-// void seedDatabase() {
-//     using (var scope = app.Services.CreateScope()) {
-//         var dbInit = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-//         dbInit.Initialize();
-//     }
-// }
+void seedDatabase() {
+    using (var scope = app.Services.CreateScope()) {
+        var dbInit = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInit.Initialize();
+    }
+}
