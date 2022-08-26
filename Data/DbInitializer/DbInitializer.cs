@@ -87,6 +87,7 @@ public class DbInitializer: IDbInitializer {
                 await _emailStore.SetEmailAsync(adminUser, adminEmail, CancellationToken.None);
                 adminUser.FirstName = "Admin";
                 adminUser.LastName = "Admin";
+                adminUser.EmailConfirmed = true;
 
                 var adminUserResult = _userManager.CreateAsync(adminUser, "Admin123*").GetAwaiter().GetResult();
 
@@ -95,6 +96,7 @@ public class DbInitializer: IDbInitializer {
                     user => user.Email == "etherapistAdmin@gmail.com"
                 );
                 _userManager.AddToRoleAsync(adminUserCheck, SD.Role_Admin).GetAwaiter().GetResult();
+
         }
 
         ApplicationUser CreateUser()

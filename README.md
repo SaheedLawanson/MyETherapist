@@ -34,9 +34,8 @@ The Etherapist app also allows users to create sessions after which therapists w
     ![appsettingJson](https://user-images.githubusercontent.com/92232710/186527271-c2fa5bf9-70eb-4c1b-a949-92a138fd6a21.png)
 
     **Option 2** (Use MSSQL with container):
-    - Rename the example.env file and set the "MSSQL_SA_PASSWORD" variable to your desired password
     - In the command line, run: ```docker-compose up``` and wait till the container is up
-    - Replace the ConnectionStrings.DefaultConnection with "Initial Catalog=etherapist; Data Source=localhost,1433; Persist Security Info=True;User ID=SA;Password=ExamplePassword123" (ExamplePassword must be replaced by the password specified in the .env file)
+    - Replace the ConnectionStrings.DefaultConnection with "Initial Catalog=etherapist; Data Source=localhost,1433; Persist Security Info=True;User ID=SA;Password=ExamplePassword123"
 4.  Create a free stripe account and get an API key [here](https://paymentsplugin.com/blog/stripe-api-keys), then populate the appsettings.Development.json file with the Secret and publishable key.
 5.  Finally, in the command line, run: ```dotnet run ```
 6.  A default admin user is created with the following details:
