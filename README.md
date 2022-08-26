@@ -29,7 +29,7 @@ The Etherapist app also allows users to create sessions after which therapists w
     -  Open MSSQL Server, select the "Server name" dropdown to see a list of available servers (In my case "SAHEED" and authentication type is "Windows Authentication")
     
     ![sqlserver_illustration](https://user-images.githubusercontent.com/92232710/186526667-3dc0b8ef-5df9-4870-9579-f92fd2d3c670.png)
-    -  In the etherapist project folder, open appsettings.development.json. Replace the value of server in the ConnectionStrings.DefaultConnection with the server name you want to use 
+    -  In the etherapist project folder, open appsettings.development.json. Replace the value of server in the ConnectionStrings.DefaultConnection "Server=<YourServerName>;Database=etherapist;Trusted_Connection=True;" (Replace <YourServerName> with the your server name :))"
     
     ![appsettingJson](https://user-images.githubusercontent.com/92232710/186527271-c2fa5bf9-70eb-4c1b-a949-92a138fd6a21.png)
 

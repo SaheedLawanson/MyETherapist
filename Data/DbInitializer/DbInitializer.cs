@@ -39,8 +39,8 @@ public class DbInitializer: IDbInitializer {
 
         }
 
+        // Create Subscription Plans
         if (_db.Subscriptions.ToList().Count == 0) {
-            // Create Subscription Plans
             _db.Subscriptions.Add(new Subscription {
                 PlanName = "Single Plan",
                 Price = 8000,
@@ -97,6 +97,29 @@ public class DbInitializer: IDbInitializer {
                 );
                 _userManager.AddToRoleAsync(adminUserCheck, SD.Role_Admin).GetAwaiter().GetResult();
 
+                // Add Questions
+                _db.CameronQuestions.Add(new CameronQuestion{
+                    OptionA = "I am Single",
+                    OptionB = "I am Engaged",
+                    OptionC = "I am Married",
+                    OptionD = "Prefer not to say",
+                    OptionAValue = "None",
+                    OptionBValue = "None",
+                    OptionCValue = "None",
+                    OptionDValue = "None",
+                });
+
+                _db.CameronQuestions.Add(new CameronQuestion{
+                    OptionA = "I usually feel weak for no reason",
+                    OptionB = "I haven't had a deep conversation with more than 2 people today",
+                    OptionC = "I hate going out",
+                    OptionD = "No option is applicable to me",
+                    OptionAValue = "Depression",
+                    OptionBValue = "Depression",
+                    OptionCValue = "Anxiety",
+                    OptionDValue = "None",
+                });
+                _db.SaveChanges();
         }
 
         ApplicationUser CreateUser()
